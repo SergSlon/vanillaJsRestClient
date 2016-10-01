@@ -1,39 +1,39 @@
-if (!Object.assign) {
-    Object.defineProperty(Object, 'assign', {
-        enumerable: false,
-        configurable: true,
-        writable: true,
-        value: function(target, firstSource) {
-            'use strict';
-            if (target === undefined || target === null) {
-                throw new TypeError('Cannot convert first argument to object');
-            }
+// if (!Object.assign) {
+//     Object.defineProperty(Object, 'assign', {
+//         enumerable: false,
+//         configurable: true,
+//         writable: true,
+//         value: function(target, firstSource) {
+//             'use strict';
+//             if (target === undefined || target === null) {
+//                 throw new TypeError('Cannot convert first argument to object');
+//             }
 
-            var to = Object(target);
-            for (var i = 1; i < arguments.length; i++) {
-                var nextSource = arguments[i];
-                if (nextSource === undefined || nextSource === null) {
-                    continue;
-                }
+//             var to = Object(target);
+//             for (var i = 1; i < arguments.length; i++) {
+//                 var nextSource = arguments[i];
+//                 if (nextSource === undefined || nextSource === null) {
+//                     continue;
+//                 }
 
-                var keysArray = Object.keys(Object(nextSource));
-                for (var nextIndex = 0, len = keysArray.length; nextIndex < len; nextIndex++) {
-                    var nextKey = keysArray[nextIndex];
-                    var desc = Object.getOwnPropertyDescriptor(nextSource, nextKey);
-                    if (desc !== undefined && desc.enumerable) {
-                        to[nextKey] = nextSource[nextKey];
-                    }
-                }
-            }
-            return to;
-        }
-    });
-}
+//                 var keysArray = Object.keys(Object(nextSource));
+//                 for (var nextIndex = 0, len = keysArray.length; nextIndex < len; nextIndex++) {
+//                     var nextKey = keysArray[nextIndex];
+//                     var desc = Object.getOwnPropertyDescriptor(nextSource, nextKey);
+//                     if (desc !== undefined && desc.enumerable) {
+//                         to[nextKey] = nextSource[nextKey];
+//                     }
+//                 }
+//             }
+//             return to;
+//         }
+//     });
+// }
 
 //TODO headers - Additional HTTP request headers.
 //TODO static method create(with assign)
 //TODO promises support
-var REST_CRUD = (function (win) {
+var REST_CRUD = (function (global) {
     // The HTTP request method to use
     var _requestMethod;
 
@@ -173,7 +173,7 @@ var REST_CRUD = (function (win) {
             callback(err, xhr);
         };
 
-        if(win.DEBUG) {
+        if(global.DEBUG) {
             xhr.onreadystatechange = function () {
                 console.log('url:', prepareUrl());
                 console.log('method:', _requestMethod);
@@ -297,4 +297,4 @@ var REST_CRUD = (function (win) {
             return this;
         }
     };
-})(window);
+})(this);
